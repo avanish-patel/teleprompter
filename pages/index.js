@@ -1,86 +1,160 @@
-import Head from 'next/head'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Head from "next/head";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Container from "react-bootstrap/Container";
+import Teleprompter from "./Teleprompter";
+import React from "react";
+
+const INITIAL_TEXT = `This is a test to see how things work. This should scroll as you approach the next word. If all goes well you can talk and it will move along.`;
 
 export default function Home() {
+  const [show, setShow] = React.useState(false);
+  const [listening, setListening] = React.useState(false);
+  const [words, setWords] = React.useState(INITIAL_TEXT.split(" "));
+  const [progress, setProgress] = React.useState(0);
+  const [fontSize, setFontSize] = React.useState(3);
+
+  const handleInput = (e) => {
+    setWords(e.target.value.split(" "));
+    progress && setProgress(0);
+  };
+
+  const handleListening = () => {
+    if (listening) {
+      setListening(false);
+    } else {
+      setProgress(0);
+      setListening(true);
+    }
+  };
+
+  const handleReset = () => setProgress(0);
+
+  const handleChange = (progress) => setProgress(progress);
+
   return (
-    <div className="container">
+    <Container fluid="md">
       <Head>
-        <title>Create Next App</title>
+        <title>Teleprompter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to{" "}
+          <a target="__blank" href="https://en.wikipedia.org/wiki/Teleprompter">
+            Teleprompter!
+          </a>
         </h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          Teleprompter’s user-friendly app shows your script while you record so
+          you nail your video the first time.
         </p>
 
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
+        <div style={{ width: "80%" }} className="mt-3 m-auto">
+          <p>Paste your content in text area below...</p>
+          <FloatingLabel controlId="floatingTextarea2">
+            <Form.Control
+              onChange={handleInput}
+              value={words.join(" ")}
+              as="textarea"
+              placeholder="Paste your content here!"
+              style={{ height: "100px", width: "100%", padding: "6px" }}
+            />
+          </FloatingLabel>
+        </div>
+        <div class="d-flex justify-content-center">
+          <Button
+            className="mt-4 text-center"
+            variant="primary"
+            onClick={() => {
+              setShow(true);
+              handleListening();
+            }}
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            Start Teleprompter!
+          </Button>
         </div>
       </main>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className="logo" />
+      <footer className="fixed-bottom">
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          Made with ❤️ and ☕️ by Avanish Patel
         </a>
       </footer>
 
+      <Modal
+        show={show}
+        fullscreen={true}
+        onHide={() => {
+          setShow(false);
+          setListening(false);
+        }}
+      >
+        <Modal.Header
+          className="bg-black"
+          // className="btn-close-white"
+          closeButton
+          closeVariant="white"
+        >
+          <div className="d-flex">
+            <div className="wrapper">
+              <span className="minus" onClick={() => setFontSize(fontSize - 1)}>
+                -
+              </span>
+              <span className="num"> {fontSize} </span>
+              <span className="plus" onClick={() => setFontSize(fontSize + 1)}>
+                +
+              </span>
+            </div>
+          </div>
+        </Modal.Header>
+        <Modal.Body className="bg-black">
+          <Teleprompter
+            fontSize={fontSize}
+            words={words}
+            listening={listening}
+            progress={progress}
+            onChange={handleChange}
+          />
+        </Modal.Body>
+      </Modal>
       <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
         main {
           padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
         }
 
+        .wrapper {
+          height: 40px;
+          min-width: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .wrapper span {
+          width: 100%;
+          text-align: center;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          user-select: none;
+        }
+        .wrapper span.num {
+          font-size: 15px;
+          border-right: 2px solid rgba(0, 0, 0, 0.2);
+          border-left: 2px solid rgba(0, 0, 0, 0.2);
+          pointer-events: none;
+        }
         footer {
           width: 100%;
-          height: 100px;
+          height: 60px;
           border-top: 1px solid #eaeaea;
           display: flex;
           justify-content: center;
@@ -102,6 +176,10 @@ export default function Home() {
           text-decoration: none;
         }
 
+        a:hover {
+          text-decoration: none !important;
+        }
+
         .title a {
           color: #0070f3;
           text-decoration: none;
@@ -117,6 +195,7 @@ export default function Home() {
           margin: 0;
           line-height: 1.15;
           font-size: 4rem;
+          text-align: center;
         }
 
         .title,
@@ -183,9 +262,8 @@ export default function Home() {
         }
 
         @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
+          .container {
+            margin: 10px;
           }
         }
       `}</style>
@@ -204,6 +282,6 @@ export default function Home() {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
-  )
+    </Container>
+  );
 }
