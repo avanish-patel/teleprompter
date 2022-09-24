@@ -50,10 +50,20 @@ export default function Home() {
           </a>
         </h1>
 
-        <p className="description">
+        <p className="description mt-4">
           Teleprompter’s user-friendly app shows your script while you record so
           you nail your video the first time.
         </p>
+
+        <p className="mt-4 text-left">How to use?</p>
+        <ol>
+          <li>Paste your content in text area below</li>
+          <li>
+            Click <code>Start Teleprompter</code> button
+          </li>
+          <li>Give permission for Audio device when modal opens</li>
+          <li>Start speaking and it will move the content as you speak</li>
+        </ol>
 
         <div style={{ width: "80%" }} className="mt-3 m-auto">
           <p>Paste your content in text area below...</p>
@@ -81,7 +91,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="fixed-bottom">
+      <footer className="fixed-bottom bg-white">
         <a
           href="https://github.com/avanish-patel"
           target="_blank"
@@ -197,8 +207,9 @@ export default function Home() {
 
         .title {
           margin: 0;
+          font-weight: 900;
           line-height: 1.15;
-          font-size: 4rem;
+          font-size: 3rem;
           text-align: center;
         }
 
@@ -215,8 +226,8 @@ export default function Home() {
         code {
           background: #fafafa;
           border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
+          // padding: 0.75rem;
+          // font-size: 1.1rem;
           font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
             DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
