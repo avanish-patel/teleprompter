@@ -1,1 +1,3 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# Teleprompter
+
+Teleprompter’s user-friendly app shows your script while you record so you nail your video the first time.
