@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
-import Teleprompter from "./Teleprompter";
+import Teleprompter from "../components/Teleprompter";
 import React from "react";
 
 const INITIAL_TEXT = `This is a test to see how things work. This should scroll as you approach the next word. If all goes well you can talk and it will move along.`;

@@ -42,8 +42,6 @@ export default function Teleprompter({
         .join(" ");
       setResults(interim);
 
-      console.log(interim);
-
       const newIndex = interim.split(" ").reduce((memo, word) => {
         if (memo >= words.length) {
           return memo;
