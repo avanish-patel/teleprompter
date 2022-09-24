@@ -67,7 +67,7 @@ export default function Home() {
             />
           </FloatingLabel>
         </div>
-        <div class="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
           <Button
             className="mt-4 text-center"
             variant="primary"
@@ -82,7 +82,11 @@ export default function Home() {
       </main>
 
       <footer className="fixed-bottom">
-        <a href="#" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://github.com/avanish-patel"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Made with ❤️ and ☕️ by Avanish Patel
         </a>
       </footer>
